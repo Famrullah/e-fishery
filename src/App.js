@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from 'react-redux';
+import Store from './store/store';
+import Comodity from './pages/comodity/comodity'
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={Store}>
+      <div className="App">
+        <Comodity/>
+      </div>
+    </Provider>
   );
 }
 
 export default App;
+  // useEffect(() => {
+  //   const SteinStore = require("stein-js-client");
+  //   const store = new SteinStore(
+  //     "https://stein.efishery.com/v1/storages/5e1edf521073e315924ceab4/list/"
+  //   );
+  //   store.read("", { limit: 10}).then(data => {
+  //     console.log(data);
+  //   });
+  // });
