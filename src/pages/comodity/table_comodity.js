@@ -31,7 +31,7 @@ function table_list(props){
       name: 'Harga',
       selector: 'price',
       sortable: true,
-      cell: row => <div>{(row.area_kota == null)?<div>-</div>:<div>{row.price}</div>}</div>,
+      cell: row => <div>{(row.area_kota == null)?<div>-</div>:<div>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row.price)}</div>}</div>,
     },
     {
       name: 'Ukuran',
