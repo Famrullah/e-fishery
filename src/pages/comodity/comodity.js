@@ -1,4 +1,5 @@
 import React, { useEffect,Suspense } from 'react';
+import Loading from '../../components/loading/is_loading'
 
 import {
   useDispatch,
@@ -44,7 +45,7 @@ function Comodity() {
 
   return (
     <div>
-        <Suspense fallback={<div>loading</div>}>
+        <Suspense fallback={<Loading/>}>
             <ListTable data={list_data_comodity_state}/>
         </Suspense>
     </div>
