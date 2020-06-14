@@ -1,10 +1,13 @@
-import React from 'react'
+import React,{useState} from 'react'
 import DataTable from 'react-data-table-component';
 import moment from 'moment'
 
 function table_list(props){
 
-  // const actions = <button key="add">Add</button>;
+  const update_size = (row)=> {
+    console.log(row)
+  }
+  
   const fomat_date = (date) => {
     return moment(new Date(date)).format("DD MMMM YYYY")
   }
@@ -45,7 +48,12 @@ function table_list(props){
       sortable: true,
       cell: row => <div>{(!row.tgl_parsed)?<div>-</div>:<div>{fomat_date(row.tgl_parsed)}</div>}</div>,
     },
+    {
+      name: 'Action',
+      cell: row => <div><button className="btn-default action" onClick={()=> props.show(row)}>Action</button></div>,
+    },
   ];
+
   const { data } = props.data
   return(
   <div>
@@ -57,7 +65,6 @@ function table_list(props){
       pagination
       defaultSortField="tgl_parsed"
       defaultSortAsc={true}
-      // actions={actions}
     />
   </div>
   )

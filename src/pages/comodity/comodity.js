@@ -1,5 +1,6 @@
-import React, { useEffect,Suspense } from 'react';
+import React, { useEffect,useState,Suspense } from 'react';
 import Loading from '../../components/loading/is_loading'
+import Modal from '../../components/modal/modal'
 
 import {
   useDispatch,
@@ -29,13 +30,18 @@ function Comodity() {
   const list_option_size_state = useSelector(
     (state) => state.option_size_state
   );
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(10);
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
        const res = await dispatch(list_comodity())
        const area = await dispatch(option_area())
        const size = await dispatch(option_size())
-       console.log(res)
+       await setData(res.length)
        console.log(area)
        console.log(size)
     };
@@ -46,7 +52,8 @@ function Comodity() {
   return (
     <div>
         <Suspense fallback={<Loading/>}>
-            <ListTable data={list_data_comodity_state}/>
+            <ListTable data={list_data_comodity_state} show={()=>setShowModal(true)}/>
+            <Modal show={showModal} modalClosed={()=> setShowModal(false)}>hello</Modal>
         </Suspense>
     </div>
   );
