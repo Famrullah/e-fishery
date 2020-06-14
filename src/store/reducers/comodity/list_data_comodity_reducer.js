@@ -1,5 +1,5 @@
 const initalState = {
-    data: null,
+    data: [],
     isError: false,
     messages: '',
   };
