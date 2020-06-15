@@ -85,7 +85,7 @@ function table_list(props){
     },
   ];
 
-  const { data } = props.data
+  // const { data } = props.data
   return(
   <div>
     <DataTable
@@ -93,7 +93,7 @@ function table_list(props){
       subHeader={true}
       subHeaderComponent={props.template}
       columns={columns}
-      data={data}
+      data={props.data.data}
       striped={true}
       pagination
       defaultSortField="tgl_parsed"

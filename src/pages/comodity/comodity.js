@@ -1,4 +1,4 @@
-import React, { useEffect,useState,Suspense } from 'react';
+import React, { useEffect,useState,Suspense,useRef } from 'react';
 import Loading from '../../components/loading/is_loading';
 import {
   useDispatch,
@@ -33,11 +33,13 @@ const ListTable = React.lazy(() => {
 function Comodity() {
   const dispatch = useDispatch()
   const classes = useStyles();
-  const [age, setAge] = useState('');
+  const [province,setProvince] = useState('')
+  const [size,setSize] = useState('')
+  const [city,setCity] = useState('')
+  const [data, setData] = useState([]);
+  const [filterData,setFilterData] = useState('')
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+
   const list_data_comodity_state = useSelector(
     (state) => state.list_data_comodity_state
   );
@@ -49,7 +51,41 @@ function Comodity() {
   const list_option_size_state = useSelector(
     (state) => state.option_size_state
   );
-  const [data, setData] = useState([]);
+
+  const filtered_data = (data,filtersObject) =>{
+    for (let key in filtersObject) {
+      data = data.filter((option) => option[key] === filtersObject[key]);
+    }
+    const obj ={
+      data:data
+    }
+    return obj;
+  }
+
+  const handleCity = (event) => {
+    setCity(event.target.value)
+    setFilterData({
+      ...filterData,
+      area_kota:event.target.value
+    })
+  };
+
+  const handleSize = (event) => {
+    setSize(event.target.value)
+    setFilterData({
+      ...filterData,
+      size:event.target.value
+    })
+
+  };
+
+  const handleProvince = (event) => {
+    setProvince(event.target.value)
+    setFilterData({
+      ...filterData,
+      area_provinsi:event.target.value
+    })
+  };
 
   const [formValue,setFormValue] = useState({
     uuid:'',
@@ -64,8 +100,8 @@ function Comodity() {
 
   const toggleModal = (row) => {
     setShowModal(!showModal)
-    console.log(showModal)
   }
+
   const toggleSuccess = (row) => {
     setSuccessAlert(!successAlert)
   }
@@ -78,7 +114,6 @@ function Comodity() {
   }
 
   const defaultValue = (row) =>{
-    console.log(row)
     setFormValue({
       uuid:row.uuid,
       komoditas:row.komoditas,
@@ -96,11 +131,11 @@ function Comodity() {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
+            value={city}
+            onChange={handleCity}
           >
-            {list_option_area_state.data.map(item => (
-              item.city?<MenuItem value={item.city}>{item.city}</MenuItem>:''
+            {list_option_area_state.data.map((item,index) => (
+              item.city?<MenuItem value={item.city} key={index}>{item.city}</MenuItem>:''
             ))}
           </Select>
       </FormControl>
@@ -109,15 +144,27 @@ function Comodity() {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
+            value={province}
+            onChange={handleProvince}
           >
-            {list_option_area_state.data.map(item => (
-              item.province?<MenuItem value={item.province}>{item.province}</MenuItem>:''
+            {list_option_area_state.data.map((item,index) => (
+              item.province?<MenuItem value={item.province} key={index}>{item.province}</MenuItem>:''
             ))}
           </Select>
       </FormControl>
-
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-simple-select-label">Ukuran</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={size}
+            onChange={handleSize}
+          >
+            {list_option_size_state.data.map((item,index) => (
+              item.size?<MenuItem value={item.size} key={index}>{item.size}</MenuItem>:''
+            ))}
+          </Select>
+      </FormControl>
     </div>
   )
 
@@ -127,12 +174,9 @@ function Comodity() {
 
   useEffect(() => {
     const fetchData = async () => {
-       const res = await dispatch(list_comodity())
-       const area = await dispatch(option_area())
-       const size = await dispatch(option_size())
-       await setData(res.length)
-       console.log(area)
-       console.log(size)
+      await dispatch(list_comodity())
+      await dispatch(option_area())
+      await dispatch(option_size())
     };
     fetchData();
     
@@ -142,7 +186,7 @@ function Comodity() {
     <div>
       <Suspense fallback={<Loading/>}>
         <ListTable 
-          data={list_data_comodity_state} 
+          data={filtered_data(list_data_comodity_state.data, filterData)} 
           isShowModal={showModal} 
           toggleModal={()=>toggleModal()} 
           successAlert={successAlert}
@@ -153,7 +197,6 @@ function Comodity() {
           formValue={formValue}
           refresh={()=>refresh()}
           template={template()}
-          age={age}
         />
       </Suspense>
     </div>
