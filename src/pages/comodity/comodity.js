@@ -1,7 +1,5 @@
 import React, { useEffect,useState,Suspense } from 'react';
 import Loading from '../../components/loading/is_loading';
-import Modal from '../../components/modal/modal';
-
 import {
   useDispatch,
   useSelector,
@@ -31,10 +29,45 @@ function Comodity() {
     (state) => state.option_size_state
   );
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+
+  const [formValue,setFormValue] = useState({
+    uuid:'',
+    komoditas:'',
+    provinsi:'',
+    kota:'',
+    harga:'',
+    ukuran:''
+  })
   const [showModal, setShowModal] = useState(false)
+
+  const toggleModal = (row) => {
+      setShowModal(!showModal)
+      console.log(showModal)
+  }
+  
+  const handleForm = (e) =>{
+    console.log(e)
+    setFormValue({
+      ...formValue,
+      [e.target.name]:e.target.value
+    })
+  }
+
+  const defaultValue = (row) =>{
+    console.log(row)
+    setFormValue({
+      uuid:row.uuid,
+      komoditas:row.komoditas,
+      provinsi:row.area_provinsi,
+      kota:row.area_kota,
+      harga:row.price,
+      ukuran:row.size
+    })
+  }
+
+  const refresh = () =>{
+    dispatch(list_comodity())
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,12 +84,17 @@ function Comodity() {
 
   return (
     <div>
-        <Suspense fallback={<Loading/>}>
-            <ListTable data={list_data_comodity_state} show={()=>setShowModal(true)}/>
-            <Modal show={showModal} modalClosed={()=> setShowModal(false)}>
-              <input type="text"></input>
-            </Modal>
-        </Suspense>
+      <Suspense fallback={<Loading/>}>
+        <ListTable 
+          data={list_data_comodity_state} 
+          isShowModal={showModal} toggleModal={()=>toggleModal()} 
+          handleForm={(e)=>handleForm(e)}
+          defaultValue={(row)=>defaultValue(row)}
+          setFormValue={(row)=>setFormValue(row)}
+          formValue={formValue}
+          refresh={()=>refresh()}
+        />
+      </Suspense>
     </div>
   );
 }

@@ -1,0 +1,14 @@
+.form-update{
+    &__header{
+        margin-bottom: 50px;
+    }
+
+    form{
+        display: grid;
+    }
+
+    .btn-update{
+        margin-top: 20px;
+        float: right;
+    }
+}
