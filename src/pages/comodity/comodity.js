@@ -1,6 +1,6 @@
 import React, { useEffect,useState,Suspense } from 'react';
-import Loading from '../../components/loading/is_loading'
-import Modal from '../../components/modal/modal'
+import Loading from '../../components/loading/is_loading';
+import Modal from '../../components/modal/modal';
 
 import {
   useDispatch,
@@ -53,7 +53,9 @@ function Comodity() {
     <div>
         <Suspense fallback={<Loading/>}>
             <ListTable data={list_data_comodity_state} show={()=>setShowModal(true)}/>
-            <Modal show={showModal} modalClosed={()=> setShowModal(false)}>hello</Modal>
+            <Modal show={showModal} modalClosed={()=> setShowModal(false)}>
+              <input type="text"></input>
+            </Modal>
         </Suspense>
     </div>
   );

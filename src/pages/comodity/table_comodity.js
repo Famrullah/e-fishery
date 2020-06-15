@@ -22,35 +22,41 @@ function table_list(props){
       name: 'Provinsi',
       selector: 'area_provinsi',
       sortable: true,
+      right: true,
       cell: row => <div>{(row.area_provinsi == null)?<div>-</div>:<div>{row.area_provinsi}</div>}</div>,
     },
     {
       name: 'Kota',
       selector: 'area_kota',
       sortable: true,
+      right: true,
       cell: row => <div>{(row.area_kota == null)?<div>-</div>:<div>{row.area_kota}</div>}</div>,
     },
     {
       name: 'Harga',
       selector: 'price',
       sortable: true,
+      right: true,
       cell: row => <div>{(row.area_kota == null)?<div>-</div>:<div>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row.price)}</div>}</div>,
     },
     {
       name: 'Ukuran',
       selector: 'size',
       sortable: true,
+      right: true,
       cell: row => <div>{(row.size == null)?<div>-</div>:<div>{row.size}</div>}</div>,
     },
     {
       name: 'Tanggal',
       selector: 'tgl_parsed',
       sortable: true,
+      right: true,
       cell: row => <div>{(!row.tgl_parsed)?<div>-</div>:<div>{fomat_date(row.tgl_parsed)}</div>}</div>,
     },
     {
       name: 'Action',
       cell: row => <div><button className="btn-default action" onClick={()=> props.show(row)}>Action</button></div>,
+      right: true,
     },
   ];
 
