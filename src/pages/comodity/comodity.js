@@ -1,4 +1,4 @@
-import React, { useEffect,useState,Suspense,useRef } from 'react';
+import React, { useEffect,useState,Suspense } from 'react';
 import Loading from '../../components/loading/is_loading';
 import {
   useDispatch,
@@ -36,7 +36,7 @@ function Comodity() {
   const [province,setProvince] = useState('')
   const [size,setSize] = useState('')
   const [city,setCity] = useState('')
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [filterData,setFilterData] = useState('')
 
 
@@ -53,6 +53,7 @@ function Comodity() {
   );
 
   const filtered_data = (data,filtersObject) =>{
+    // console.log(filtersObject)
     for (let key in filtersObject) {
       data = data.filter((option) => option[key] === filtersObject[key]);
     }
@@ -63,28 +64,42 @@ function Comodity() {
   }
 
   const handleCity = (event) => {
-    setCity(event.target.value)
-    setFilterData({
-      ...filterData,
-      area_kota:event.target.value
-    })
+    if(event.target.value !== ''){
+      setCity(event.target.value)
+      setFilterData({
+        ...filterData,
+        area_kota:event.target.value
+      })
+    }else{
+      setCity(event.target.value)
+      setFilterData(delete filterData.area_kota)
+    }
   };
 
   const handleSize = (event) => {
-    setSize(event.target.value)
-    setFilterData({
-      ...filterData,
-      size:event.target.value
-    })
-
+    if(event.target.value !== ''){
+      setSize(event.target.value)
+      setFilterData({
+        ...filterData,
+        size:event.target.value
+      })
+    }else{
+      setSize(event.target.value)
+      setFilterData(delete filterData.size)
+    }
   };
 
   const handleProvince = (event) => {
-    setProvince(event.target.value)
-    setFilterData({
-      ...filterData,
-      area_provinsi:event.target.value
-    })
+    if(event.target.value !== ''){
+      setProvince(event.target.value)
+      setFilterData({
+        ...filterData,
+        area_provinsi:event.target.value
+      })
+    }else{
+      setProvince(event.target.value)
+      setFilterData(delete filterData.area_provinsi)
+    }
   };
 
   const [formValue,setFormValue] = useState({
@@ -134,6 +149,9 @@ function Comodity() {
             value={city}
             onChange={handleCity}
           >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
             {list_option_area_state.data.map((item,index) => (
               item.city?<MenuItem value={item.city} key={index}>{item.city}</MenuItem>:''
             ))}
@@ -147,6 +165,9 @@ function Comodity() {
             value={province}
             onChange={handleProvince}
           >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
             {list_option_area_state.data.map((item,index) => (
               item.province?<MenuItem value={item.province} key={index}>{item.province}</MenuItem>:''
             ))}
@@ -160,6 +181,9 @@ function Comodity() {
             value={size}
             onChange={handleSize}
           >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
             {list_option_size_state.data.map((item,index) => (
               item.size?<MenuItem value={item.size} key={index}>{item.size}</MenuItem>:''
             ))}

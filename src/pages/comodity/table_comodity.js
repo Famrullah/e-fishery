@@ -10,7 +10,6 @@ const store = new SteinStore(
 );
 
 function table_list(props){
-  console.log(props)
   const update_harga = () => {
     const num = props.formValue.harga
     const remove_comma = num.replace(/[ ,]/g, "");
