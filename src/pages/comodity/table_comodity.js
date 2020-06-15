@@ -11,7 +11,7 @@ const store = new SteinStore(
 
 function table_list(props){
   console.log(props)
-  const update_harga = (obj) => {
+  const update_harga = () => {
     const num = props.formValue.harga
     const remove_comma = num.replace(/[ ,]/g, "");
     const format_num = Math.floor(remove_comma)
@@ -22,9 +22,11 @@ function table_list(props){
     })
     .then(res => {
       props.toggleModal()
+      props.toggleSuccess()
       props.refresh()
     });
   }
+
   const open = (row) => {
     props.toggleModal()
     props.defaultValue(row)
@@ -33,6 +35,7 @@ function table_list(props){
   const fomat_date = (date) => {
     return moment(new Date(date)).format("DD MMMM YYYY")
   }
+  
   const columns = [
     {
       name: 'Komoditas',
@@ -87,6 +90,8 @@ function table_list(props){
   <div>
     <DataTable
       title="Komoditas"
+      subHeader={true}
+      subHeaderComponent={props.template}
       columns={columns}
       data={data}
       striped={true}
@@ -112,6 +117,9 @@ function table_list(props){
         </form>
           <button className="btn-default action btn-update" onClick={update_harga}>Update</button>
       </div>
+    </Modal>
+    <Modal show={props.successAlert} modalClosed={()=>props.toggleSuccess()}>
+      berhasil
     </Modal>
   </div>
   )
