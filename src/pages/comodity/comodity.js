@@ -36,7 +36,6 @@ function Comodity() {
   const [province,setProvince] = useState('')
   const [size,setSize] = useState('')
   const [city,setCity] = useState('')
-  // const [data, setData] = useState([]);
   const [filterData,setFilterData] = useState('')
 
 
@@ -53,7 +52,7 @@ function Comodity() {
   );
 
   const filtered_data = (data,filtersObject) =>{
-    // console.log(filtersObject)
+    console.log(filtersObject)
     for (let key in filtersObject) {
       data = data.filter((option) => option[key] === filtersObject[key]);
     }
@@ -71,7 +70,9 @@ function Comodity() {
         area_kota:event.target.value
       })
     }else{
-      setCity(event.target.value)
+      setSize('')
+      setCity('')
+      setProvince('')
       setFilterData(delete filterData.area_kota)
     }
   };
@@ -84,7 +85,9 @@ function Comodity() {
         size:event.target.value
       })
     }else{
-      setSize(event.target.value)
+      setSize('')
+      setCity('')
+      setProvince('')
       setFilterData(delete filterData.size)
     }
   };
@@ -97,7 +100,9 @@ function Comodity() {
         area_provinsi:event.target.value
       })
     }else{
-      setProvince(event.target.value)
+      setSize('')
+      setCity('')
+      setProvince('')
       setFilterData(delete filterData.area_provinsi)
     }
   };
