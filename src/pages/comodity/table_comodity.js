@@ -125,7 +125,7 @@ function table_list(props){
     </Modal>
     <Modal show={props.successAlert} modalClosed={()=>props.toggleSuccess()}>
       <div class="success">
-        <strong>The Price was successfully updated!</strong> 
+        <strong>Harga berhasil di update !</strong> 
       </div>
     </Modal>
   </div>
