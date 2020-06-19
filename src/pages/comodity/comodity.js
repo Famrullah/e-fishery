@@ -53,6 +53,7 @@ function Comodity() {
   );
 
   const filtered_data = (data,filtersObject) =>{
+    console.log(data)
     for (let key in filtersObject) {
       data = data.filter((option) => option[key] === filtersObject[key]);
     }
@@ -65,45 +66,45 @@ function Comodity() {
   const handleCity = (event) => {
     if(event.target.value !== ''){
       setCity(event.target.value)
-      setFilterData({
-        ...filterData,
-        area_kota:event.target.value
-      })
+      // setFilterData({
+      //   ...filterData,
+      //   area_kota:event.target.value
+      // })
     }else{
-      setSize('')
-      setCity('')
-      setProvince('')
-      setFilterData(delete filterData.area_kota)
+      // setSize('')
+      // setCity('')
+      // setProvince('')
+      // setFilterData(delete filterData.area_kota)
     }
   };
 
   const handleSize = (event) => {
     if(event.target.value !== ''){
       setSize(event.target.value)
-      setFilterData({
-        ...filterData,
-        size:event.target.value
-      })
+      // setFilterData({
+      //   ...filterData,
+      //   size:event.target.value
+      // })
     }else{
-      setSize('')
-      setCity('')
-      setProvince('')
-      setFilterData(delete filterData.size)
+      // setSize('')
+      // setCity('')
+      // setProvince('')
+      // setFilterData(delete filterData.size)
     }
   };
 
   const handleProvince = (event) => {
     if(event.target.value !== ''){
       setProvince(event.target.value)
-      setFilterData({
-        ...filterData,
-        area_provinsi:event.target.value
-      })
+      // setFilterData({
+      //   ...filterData,
+      //   area_provinsi:event.target.value
+      // })
     }else{
-      setSize('')
-      setCity('')
-      setProvince('')
-      setFilterData(delete filterData.area_provinsi)
+      // setSize('')
+      // setCity('')
+      // setProvince('')
+      // setFilterData(delete filterData.area_provinsi)
     }
   };
 
