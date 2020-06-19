@@ -37,6 +37,7 @@ function Comodity() {
   const [size,setSize] = useState('')
   const [city,setCity] = useState('')
   const [filterData,setFilterData] = useState('')
+  const [loading,setLoading] = useState(false)
 
 
   const list_data_comodity_state = useSelector(
@@ -52,7 +53,6 @@ function Comodity() {
   );
 
   const filtered_data = (data,filtersObject) =>{
-    console.log(filtersObject)
     for (let key in filtersObject) {
       data = data.filter((option) => option[key] === filtersObject[key]);
     }
@@ -120,6 +120,10 @@ function Comodity() {
 
   const toggleModal = (row) => {
     setShowModal(!showModal)
+  }
+
+  const isLoading = (row)=>{
+    setLoading(row)
   }
 
   const toggleSuccess = (row) => {
@@ -226,6 +230,8 @@ function Comodity() {
           formValue={formValue}
           refresh={()=>refresh()}
           template={template()}
+          loading={loading}
+          setLoading={(row)=>isLoading(row)}
         />
       </Suspense>
     </div>

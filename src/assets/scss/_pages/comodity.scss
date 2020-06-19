@@ -7,8 +7,22 @@
         display: grid;
     }
 
-    .btn-update{
-        margin-top: 20px;
-        float: right;
+
+    &__footer{
+        overflow: hidden;
+        .btn-update{
+            margin-top: 20px;
+            float: right;
+        }
+
+        .custom-spinner__update{
+            float: left;
+        }
     }
+}
+
+.success {
+    padding: 20px;
+    background-color: #31aa9a;
+    color: white;
 }

@@ -4,6 +4,7 @@ import moment from 'moment'
 import Modal from '../../components/modal/modal';
 import CurrencyTextField from '@unicef/material-ui-currency-textfield'
 import SteinStore from 'stein-js-client'
+import Spinner from '../../components/loading/spinner'
 
 const store = new SteinStore(
   "https://stein.efishery.com/v1/storages/5e1edf521073e315924ceab4/list/"
@@ -14,6 +15,7 @@ function table_list(props){
     const num = props.formValue.harga
     const remove_comma = num.replace(/[ ,]/g, "");
     const format_num = Math.floor(remove_comma)
+    props.setLoading(true)
     store
     .edit("", {
       search: { uuid: props.formValue.uuid },
@@ -23,6 +25,7 @@ function table_list(props){
       props.toggleModal()
       props.toggleSuccess()
       props.refresh()
+      props.setLoading(false)
     });
   }
 
@@ -114,11 +117,16 @@ function table_list(props){
             onChange={(event)=>props.handleForm(event)}
           />
         </form>
-          <button className="btn-default action btn-update" onClick={update_harga}>Update</button>
+         <div className="form-update__footer">
+            <button className="btn-default action btn-update" onClick={update_harga}>Update</button>
+            {props.loading?<Spinner></Spinner>:''}
+         </div>
       </div>
     </Modal>
     <Modal show={props.successAlert} modalClosed={()=>props.toggleSuccess()}>
-      berhasil
+      <div class="success">
+        <strong>The size was successfully updated!</strong> 
+      </div>
     </Modal>
   </div>
   )
